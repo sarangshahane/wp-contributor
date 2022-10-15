@@ -49,7 +49,7 @@ if ( ! class_exists( 'Wp_Contributor_Loader' ) ) {
 		 */
 		private function __construct() {
 			$this->define_plugin_constants();
-			
+
 			// Load the plugins files as soon as the plugin is activated.
 			add_action( 'plugins_loaded', array( $this, 'load_plugin_files' ) );
 		}
@@ -60,7 +60,7 @@ if ( ! class_exists( 'Wp_Contributor_Loader' ) ) {
 		 * @since  1.0.0
 		 */
 		public function define_plugin_constants() {
-			
+
 			define( 'WP_CONTRIBUTOR_BASE', plugin_basename( WP_CONTRIBUTOR_FILE ) );
 			define( 'WP_CONTRIBUTOR_DIR', plugin_dir_path( WP_CONTRIBUTOR_FILE ) );
 			define( 'WP_CONTRIBUTOR_URL', plugins_url( '/', WP_CONTRIBUTOR_FILE ) );

@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WP Contributor
- * Plugin URI: 
+ * Plugin URI:
  * Description: Add one or more contributor/authors to post/pages.
  * Version: 1.0.0
  * Author: sarangshahane
