@@ -29,6 +29,13 @@ if ( ! class_exists( 'Wp_Contributor_Loader' ) ) {
 		private static $instance = null;
 
 		/**
+		 * Member Variable
+		 *
+		 * @var Wp_Contributor_Utils
+		 */
+		public $utils = null;
+
+		/**
 		 * Instance of Wp_Contributor_Loader
 		 *
 		 * @since  1.0.0
@@ -61,13 +68,13 @@ if ( ! class_exists( 'Wp_Contributor_Loader' ) ) {
 		 */
 		public function define_plugin_constants() {
 
-			define( 'WP_CONTRIBUTOR_BASE', plugin_basename( WP_CONTRIBUTOR_FILE ) );
-			define( 'WP_CONTRIBUTOR_DIR', plugin_dir_path( WP_CONTRIBUTOR_FILE ) );
-			define( 'WP_CONTRIBUTOR_URL', plugins_url( '/', WP_CONTRIBUTOR_FILE ) );
+			define( 'WPC_BASE', plugin_basename( WPC_FILE ) );
+			define( 'WPC_DIR', plugin_dir_path( WPC_FILE ) );
+			define( 'WPC_URL', plugins_url( '/', WPC_FILE ) );
 
-			define( 'WP_CONTRIBUTOR_VER', '1.11.1' );
-			define( 'WP_CONTRIBUTOR_SLUG', 'wp-contributor' );
-			define( 'WP_CONTRIBUTOR_NAME', 'WP Contributor' );
+			define( 'WPC_VER', '1.11.1' );
+			define( 'WPC_SLUG', 'wp-contributor' );
+			define( 'WPC_NAME', 'WP Contributor' );
 
 		}
 
@@ -78,13 +85,46 @@ if ( ! class_exists( 'Wp_Contributor_Loader' ) ) {
 		 */
 		public function load_plugin_files() {
 
-			if ( is_admin() ) {
-				require_once WP_CONTRIBUTOR_DIR . 'classes/class-wp-contributor-admin.php';
-			}
+			$this->load_utility_files();
 
+			if ( is_admin() ) {
+				$this->load_admin_files();
+			}
+		}
+
+		/**
+		 * Load admin area related files.
+		 *
+		 * @since 1.0.0
+		 */
+		public function load_admin_files() {
+
+			require_once WPC_DIR . 'classes/class-wp-contributor-admin.php';
+		}
+
+		/**
+		 * Load utility/helper files.
+		 *
+		 * @since 1.0.0
+		 */
+		public function load_utility_files() {
+			require_once WPC_DIR . 'classes/class-wp-contributor-utils.php';
+
+			$this->utils = Wp_Contributor_Utils::instance();
 		}
 
 	}
 
 	Wp_Contributor_Loader::instance();
+}
+
+/**
+ * Get loader class instance.
+ *
+ * This instance will contains most of the public functions to access OR to use.
+ *
+ * @return object
+ */
+function wpc_loader() {
+	return Wp_Contributor_Loader::instance();
 }

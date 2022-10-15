@@ -14,7 +14,7 @@
 /**
  * Plugin file location.
  */
-define( 'WP_CONTRIBUTOR_FILE', __FILE__ );
+define( 'WPC_FILE', __FILE__ );
 
 /**
  * Plugin Loader file

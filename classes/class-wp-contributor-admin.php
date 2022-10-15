@@ -19,6 +19,7 @@ class Wp_Contributor_Admin {
 	/**
 	 * Instance of Wp_Contributor_Admin
 	 *
+	 * @since 1.0.0
 	 * @var Wp_Contributor_Admin
 	 */
 	private static $instance = null;
@@ -26,6 +27,7 @@ class Wp_Contributor_Admin {
 	/**
 	 * Retrieve the Instance of Wp_Contributor_Admin Class
 	 *
+	 * @since 1.0.0
 	 * @return Wp_Contributor_Admin Instance of Wp_Contributor_Admin class
 	 */
 	public static function instance() {
@@ -37,19 +39,36 @@ class Wp_Contributor_Admin {
 	}
 
 	/**
+	 * Member Variable
+	 *
+	 * @since 1.0.0
+	 * @var array
+	 */
+	public $supported_post_types = null;
+
+	/**
 	 * Constructor
+	 *
+	 * @since 1.0.0
 	 */
 	private function __construct() {
 		add_action( 'add_meta_boxes', array( $this, 'register_plugin_metaboxs' ) );
 		add_action( 'save_post', array( $this, 'save_meta' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'load_admin_scripts' ) );
+
+		$this->supported_post_types = wpc_loader()->utils->get_supported_post_types();
 	}
 
 	/**
 	 * Register meta box(es).
+	 *
+	 * @since 1.0.0
 	 */
 	function register_plugin_metaboxs() {
 
-		$post_types = apply_filters( 'wp_contributor_show_metabox_for_posts', array( 'post', 'page' ) );
+		if ( ! wpc_loader()->utils->is_allowed_screen() ) {
+			return;
+		}
 
 		// Here wpc stands for Wp_Contributor.
 		add_meta_box(
@@ -59,7 +78,7 @@ class Wp_Contributor_Admin {
 				$this,
 				'metabox_render_html',
 			),
-			$post_types,
+			$this->supported_post_types,
 			'side',
 			'high'
 		);
@@ -69,6 +88,7 @@ class Wp_Contributor_Admin {
 	 * Render Meta field with minor HTML.
 	 *
 	 * @param  POST $post Current post object which is being displayed.
+	 * @since 1.0.0
 	 */
 	function metabox_render_html( $post ) {
 
@@ -84,18 +104,23 @@ class Wp_Contributor_Admin {
 
 		?>
 			<p class="description"><?php esc_html_e( 'Select the users who helped to create this post/page.', 'wp-contributor' ); ?> </p>			
-			<div class="wpc-users-list" style="display: block; max-height: 120px; overflow-y: auto; overflow-x: hidden; height: 100%; padding: 0 0 10px 0;">
+			<div class="wpc-users-list">
 		<?php
+
 		foreach ( $users as $user_id => $user_data ) {
+			$checked = '';
+
+			if ( in_array( (string) $user_id, $selected_users, true ) ) {
+				$checked = 'checked';
+			}
 
 			$user_first_name = $user_data['first_name'] ? $user_data['first_name'] : '';
 			$user_last_name  = $user_data['last_name'] ? $user_data['last_name'] : '';
+			$full_name       = $user_first_name . ' ' . $user_last_name;
+			$full_name       = ! empty( $full_name ) ? $full_name : $user_data['display_name'];
 
-			$full_name = $user_first_name . ' ' . $user_last_name;
-
-			$full_name = ! empty( $full_name ) ? $full_name : $user_data['display_name'];
-			echo "<label class='checkbox-inline' style='display: block; margin-top: 10px;'>";
-			echo "<input type='checkbox' name='wp_contributors[]' style='margin-right: 6px;' value='" . (int) $user_data['id'] . "'>" . $full_name;
+			echo "<label class='checkbox-inline'>";
+			echo "<input class='input-checkbox' type='checkbox' name='wp_contributors[]' " . esc_attr( $checked ) . " value='" . (int) $user_id . "'>" . $full_name;
 			echo '</label>';
 		}
 		?>
@@ -107,6 +132,7 @@ class Wp_Contributor_Admin {
 	 * Prepare WordPress user's data.
 	 *
 	 * @return  array $user_info WordPress user's info.
+	 * @since 1.0.0
 	 */
 	public function prepare_users_data() {
 
@@ -135,6 +161,7 @@ class Wp_Contributor_Admin {
 	 * @param  POST $post_id Current post object which is being displayed.
 	 *
 	 * @return Void
+	 * @since 1.0.0
 	 */
 	public function save_meta( $post_id ) {
 
@@ -166,6 +193,22 @@ class Wp_Contributor_Admin {
 
 		update_post_meta( $post_id, 'wp_contributors_list', $selected_contributor, false );
 
+	}
+
+	/**
+	 * Load admin Styles & scripts
+	 *
+	 * @return Void
+	 * @since 1.0.0
+	 */
+	public function load_admin_scripts() {
+
+		if ( ! wpc_loader()->utils->is_allowed_screen() ) {
+			return;
+		}
+
+		wp_enqueue_style( 'wpc-admin-metabox-css', WPC_URL . 'assets/css/admin-metabox.css', array(), WPC_VER );
+		wp_style_add_data( 'wpc-admin-metabox-css', 'rtl', 'replace' );
 	}
 }
 
