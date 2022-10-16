@@ -12,7 +12,7 @@ Add one or more contributor name on post or pages. You can also use [wpc_contrib
 
 #### License: GNU General Public License v3.0
 
-================================= Description ================================================
+================================= Description =================================
 
 ### Steps to use the plugin
 
