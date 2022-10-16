@@ -2,15 +2,14 @@
 
 Add one or more contributor name on post or pages. You can also use [wpc_contributor_list] shortcode to display the contributor's list in your sidebar on WordPress post or pages.
 
-#### Contributors
-<a href="https://profiles.wordpress.org/sarangshahane/" target="_blank">Sarang Shahane</a>
-#### Tags: 
-- WordPress
-- Contrubutor
-- Authors
--Users
-
-#### License: GNU General Public License v3.0
+#### Plugin Info:
+- Contributor: <a href="https://profiles.wordpress.org/sarangshahane/" target="_blank">Sarang Shahane</a>
+- Tags: WordPress, Contrubutor, Authors, Users
+- Requires at least: 5.4
+- Tested up to: 6.0
+- Stable tag: 1.0.0
+- Requires PHP: 5.6
+- License: GNU General Public License v3.0
 
 ================================= Description =================================
 
