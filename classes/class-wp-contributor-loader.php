@@ -85,10 +85,17 @@ if ( ! class_exists( 'Wp_Contributor_Loader' ) ) {
 		 */
 		public function load_plugin_files() {
 
+			// Load common files and function related to admin and frontend.
 			$this->load_utility_files();
 
+			// Load only admin area related files.
 			if ( is_admin() ) {
 				$this->load_admin_files();
+			}
+
+			// Load only frontend related files.
+			if ( ! is_admin() ) {
+				$this->load_frontend_files();
 			}
 		}
 
@@ -113,8 +120,21 @@ if ( ! class_exists( 'Wp_Contributor_Loader' ) ) {
 			$this->utils = Wp_Contributor_Utils::instance();
 		}
 
+		/**
+		 * Load utility/helper files.
+		 *
+		 * @since 1.0.0
+		 */
+		public function load_frontend_files() {
+			require_once WPC_DIR . 'classes/class-wp-contributor-frontend.php';
+		}
+
 	}
 
+	/**
+	 *  Prepare if class 'Wp_Contributor_Loader' exist.
+	 *  Kicking this off by calling 'instance()' method.
+	 */
 	Wp_Contributor_Loader::instance();
 }
 
