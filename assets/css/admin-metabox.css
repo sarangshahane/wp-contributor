@@ -1,18 +1,18 @@
 /* Main checkbox list wrapper */
-.wpc-users-list{
-    display: block;
-    max-height: 120px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: 100%;
-    padding: 0 0 10px 5px;
+.wpc-users-list {
+	display: block;
+	max-height: 120px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	height: 100%;
+	padding: 0 0 10px 5px;
 }
 
-.wpc-users-list .checkbox-inline{
-    display: block;
-    margin-top: 10px;
+.wpc-users-list .checkbox-inline {
+	display: block;
+	margin-top: 10px;
 }
 
-.wpc-users-list .input-checkbox{
-    margin-right: 6px;
+.wpc-users-list .input-checkbox {
+	margin-right: 6px;
 }

@@ -1,0 +1,37 @@
+{
+  "name": "wp-contributor",
+  "version": "0.1.0",
+  "devDependencies": {
+    "@wordpress/scripts": "^25.1.0",
+    "grunt": "~0.4.5",
+    "grunt-contrib-clean": "^2.0.1",
+    "grunt-contrib-compress": "^2.0.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-nodeunit": "~0.4.1",
+    "grunt-contrib-uglify": "~0.5.0",
+    "grunt-wp-i18n": "^1.0.3"
+  },
+  "description": "Add one or more contributor name on post or pages. You can also use [wpc_contributor_list] shortcode to display the contributor's list in your sidebar on WordPress post or pages.",
+  "main": "Gruntfile.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "lint-css": "wp-scripts lint-style",
+    "lint-css:fix": "npm run lint-css -- --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sarangshahane/wp-contributor.git"
+  },
+  "author": "sarangshahane",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/sarangshahane/wp-contributor/issues"
+  },
+  "homepage": "https://github.com/sarangshahane/wp-contributor#readme",
+  "dependencies": {
+    "autoprefixer": "^10.4.13"
+  }
+}

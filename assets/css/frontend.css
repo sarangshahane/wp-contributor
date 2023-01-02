@@ -7,49 +7,51 @@
  * Author URI: http://resume.sarangshahane.in/
  */
 
-article.wpc-contributor-wrapper{
-    padding: 30px;
-    background-color: #fff;
-    margin-top: 30px;
+article.wpc-contributor-wrapper {
+	padding: 30px;
+	background-color: #fff;
+	margin-top: 30px;
 }
-.wpc-contributor-list table{
-    border: none;
-    margin: 0;
+
+.wpc-contributor-list table {
+	border: none;
+	margin: 0;
 }
 
 .wpc-contributor-list table tr > th,
 .wpc-contributor-list table tr > td {
-    border: none;
-    padding: 0 0 0 10px;
+	border: none;
+	padding: 0 0 0 10px;
 }
 
 .wpc-contributor-list table tr > th:first-child,
 .wpc-contributor-list table tr > td:first-child {
-    width: 8%;
-    text-align: center;
-    padding: 15px 5px 15px 0;
+	width: 8%;
+	text-align: center;
+	padding: 15px 5px 15px 0;
 }
 
-.wpc-contributor-list .wpc-contributor--user-icon{
-    border-radius: 50%;
+.wpc-contributor-list .wpc-contributor--user-icon {
+	border-radius: 50%;
 }
 
-.wpc-contributor-list a.wpc-contributor--user-link{
-    text-decoration: none;
-    cursor: pointer;
+.wpc-contributor-list a.wpc-contributor--user-link {
+	text-decoration: none;
+	cursor: pointer;
 }
 
-/* ******************************************* Main page CSS End ************************************************************ */
+/* ***************** Main page CSS End ***************** */
 
 /**
 * ****************************
 * Side bar shortcode CSS Start
 * ****************************
 */
-.widget-area .sidebar-main .wpc-contributor-list table tr > th:first-child, 
-.widget-area .sidebar-main .wpc-contributor-list table tr > td:first-child{
-    padding: 5px 5px 5px 0;
+.widget-area .sidebar-main .wpc-contributor-list table tr > th:first-child,
+.widget-area .sidebar-main .wpc-contributor-list table tr > td:first-child {
+	padding: 5px 5px 5px 0;
 }
+
 /**
 * **************************
 * Side bar shortcode CSS End
