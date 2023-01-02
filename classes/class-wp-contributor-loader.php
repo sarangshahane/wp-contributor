@@ -43,7 +43,7 @@ if ( ! class_exists( 'Wp_Contributor_Loader' ) ) {
 		 */
 		public static function instance() {
 			if ( ! isset( self::$instance ) ) {
-				self::$instance = new self;
+				self::$instance = new self();
 			}
 
 			return self::$instance;
@@ -67,7 +67,6 @@ if ( ! class_exists( 'Wp_Contributor_Loader' ) ) {
 		 * @since  1.0.0
 		 */
 		public function define_plugin_constants() {
-
 			define( 'WPC_BASE', plugin_basename( WPC_FILE ) );
 			define( 'WPC_DIR', plugin_dir_path( WPC_FILE ) );
 			define( 'WPC_URL', plugins_url( '/', WPC_FILE ) );
@@ -75,7 +74,6 @@ if ( ! class_exists( 'Wp_Contributor_Loader' ) ) {
 			define( 'WPC_VER', '1.11.1' );
 			define( 'WPC_SLUG', 'wp-contributor' );
 			define( 'WPC_NAME', 'WP Contributor' );
-
 		}
 
 		/**
@@ -105,7 +103,6 @@ if ( ! class_exists( 'Wp_Contributor_Loader' ) ) {
 		 * @since 1.0.0
 		 */
 		public function load_admin_files() {
-
 			require_once WPC_DIR . 'classes/class-wp-contributor-admin.php';
 		}
 

@@ -38,7 +38,7 @@ if ( ! class_exists( 'Wp_Contributor_Utils' ) ) {
 		 */
 		public static function instance() {
 			if ( ! isset( self::$instance ) ) {
-				self::$instance = new self;
+				self::$instance = new self();
 			}
 
 			return self::$instance;
@@ -62,11 +62,11 @@ if ( ! class_exists( 'Wp_Contributor_Utils' ) ) {
 		public function get_supported_post_types() {
 
 			/**
-			 * Filter `wp_contributor_show_metabox_for_posts`.
+			 * Filter `wpc_show_metabox_for_posts`.
 			 *
 			 * You can use this filter to add a custom support of your own custom post type to display this setting.
 			 */
-			return apply_filters( 'wp_contributor_show_metabox_for_posts', array( 'post', 'page' ) );
+			return apply_filters( 'wpc_show_metabox_for_posts', array( 'post', 'page' ) );
 		}
 
 		/**
@@ -76,7 +76,6 @@ if ( ! class_exists( 'Wp_Contributor_Utils' ) ) {
 		 * @return bool
 		 */
 		public function is_allowed_screen() {
-
 			$screen    = get_current_screen();
 			$post_type = $screen ? $screen->post_type : '';
 
@@ -115,7 +114,6 @@ if ( ! class_exists( 'Wp_Contributor_Utils' ) ) {
 		 * @return array $contributors The list of contributors.
 		 */
 		public function get_contributors_list( $post_id = '' ) {
-
 			global $post;
 
 			if ( ! in_array( $post->post_type, $this->get_supported_post_types(), true ) ) {
@@ -123,7 +121,6 @@ if ( ! class_exists( 'Wp_Contributor_Utils' ) ) {
 			}
 
 			if ( empty( $post_id ) ) {
-
 				$post_id = ! empty( $post ) ? $post->ID : '';
 			}
 
@@ -134,7 +131,6 @@ if ( ! class_exists( 'Wp_Contributor_Utils' ) ) {
 			}
 
 			return $contributors;
-
 		}
 	}
 }

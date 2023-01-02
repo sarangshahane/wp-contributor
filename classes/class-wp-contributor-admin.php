@@ -38,7 +38,7 @@ if ( ! class_exists( 'Wp_Contributor_Admin' ) ) {
 		 */
 		public static function instance() {
 			if ( ! isset( self::$instance ) ) {
-				self::$instance = new self;
+				self::$instance = new self();
 			}
 
 			return self::$instance;
@@ -70,8 +70,7 @@ if ( ! class_exists( 'Wp_Contributor_Admin' ) ) {
 		 *
 		 * @since 1.0.0
 		 */
-		function register_plugin_metaboxs() {
-
+		public function register_plugin_metaboxs() {
 			if ( ! wpc_loader()->utils->is_allowed_screen() ) {
 				return;
 			}
@@ -79,7 +78,7 @@ if ( ! class_exists( 'Wp_Contributor_Admin' ) ) {
 			// Here wpc stands for Wp_Contributor.
 			add_meta_box(
 				'wpc-meta-box',
-				__( 'WP Contributors', 'wp-contributors' ),
+				__( 'WP Contributors', 'wpc' ),
 				array(
 					$this,
 					'metabox_render_html',
@@ -96,7 +95,7 @@ if ( ! class_exists( 'Wp_Contributor_Admin' ) ) {
 		 * @param  POST $post Current post object which is being displayed.
 		 * @since 1.0.0
 		 */
-		function metabox_render_html( $post ) {
+		public function metabox_render_html( $post ) {
 
 			// We'll use this nonce field later on when saving.
 			wp_nonce_field( 'wp_contributor_nounce', 'wp_contributor_nounce' );
@@ -109,7 +108,7 @@ if ( ! class_exists( 'Wp_Contributor_Admin' ) ) {
 			}
 
 			?>
-			<p class="description"><?php esc_html_e( 'Select the users who helped to create this post/page.', 'wp-contributor' ); ?> </p>			
+			<p class="description"><?php esc_html_e( 'Select the users who helped to create this post/page.', 'wpc' ); ?> </p>			
 			<div class="wpc-users-list">
 			<?php
 
@@ -126,7 +125,7 @@ if ( ! class_exists( 'Wp_Contributor_Admin' ) ) {
 				$full_name       = ! empty( $full_name ) ? $full_name : $user_data['display_name'];
 
 				echo "<label class='checkbox-inline'>";
-				echo "<input class='input-checkbox' type='checkbox' name='wp_contributors[]' " . esc_attr( $checked ) . " value='" . (int) $user_id . "'>" . $full_name;
+				echo "<input class='input-checkbox' type='checkbox' name='wp_contributors[]' " . esc_attr( $checked ) . " value='" . (int) $user_id . "'>" . esc_html( $full_name );
 				echo '</label>';
 			}
 			?>
@@ -141,7 +140,6 @@ if ( ! class_exists( 'Wp_Contributor_Admin' ) ) {
 		 * @since 1.0.0
 		 */
 		public function prepare_users_data() {
-
 			$wp_users  = get_users( array( 'fields' => array( 'ID', 'name', 'display_name', 'user_nicename' ) ) );
 			$all_users = array();
 
@@ -191,9 +189,9 @@ if ( ! class_exists( 'Wp_Contributor_Admin' ) ) {
 				return;
 			}
 
-			$selected_contributor = isset( $_POST['wp_contributors'] ) ? $_POST['wp_contributors'] : '';
+			$selected_contributor = isset( $_POST['wp_contributors'] ) ? sanitize_text_field( wp_unslash( $_POST['wp_contributors'] ) ) : '';
 
-			if ( empty( $selected_contributor ) ) {
+			if ( empty( $selected_contributor ) || ! is_array( $selected_contributor ) ) {
 				return;
 			}
 
@@ -203,7 +201,6 @@ if ( ! class_exists( 'Wp_Contributor_Admin' ) ) {
 
 			foreach ( $wp_users as $index => $user_data ) {
 				if ( in_array( $user_data->ID, $selected_contributor, true ) ) {
-
 					$user_info                          = get_userdata( $user_data->ID );
 					$user_profile_pic                   = esc_url( get_avatar_url( $user_data->ID ) );
 					$contributor_data[ $user_data->ID ] = array(
@@ -218,7 +215,6 @@ if ( ! class_exists( 'Wp_Contributor_Admin' ) ) {
 			}
 
 			update_post_meta( $post_id, 'wp_contributors_list', $contributor_data, false );
-
 		}
 
 		/**
@@ -228,7 +224,6 @@ if ( ! class_exists( 'Wp_Contributor_Admin' ) ) {
 		 * @since 1.0.0
 		 */
 		public function load_admin_scripts() {
-
 			if ( ! wpc_loader()->utils->is_allowed_screen() ) {
 				return;
 			}
